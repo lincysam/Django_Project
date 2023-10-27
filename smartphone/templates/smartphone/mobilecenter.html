@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    {% load static %}
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+      }
+        .container{
+        display:flex;
+
+        }
+        .heading{
+            margin-left: 500px;
+            
+            font-size: 12;
+            font: bold;
+            border-radius: 10px;
+            align-items: center;
+            width: 250px;
+            height: 50px;
+            color: black;
+            border: 1px;
+        }
+        .heading h2{align-items:center;
+            margin-left: 10px;
+            padding: 10px;
+        }
+        .main{
+            display:inline-flex;
+            width:100%;
+            
+        }
+        .image_left{
+            position:relative;
+            
+            
+            float:left;
+            
+            width:500px;
+           
+            transform: translate(-5%, -5%);
+            height:calc(100vw - 65vw);
+            background-repeat: no-repeat;
+            max-height: 100%;
+            margin-top: 50px;
+            margin-left: 50px;
+    
+
+        }
+        .first{
+            background-repeat: no-repeat;
+            height:200px;
+            width:400px;
+            position: inherit;
+            background-image:url("{% static '/smartphone/images/applenew.jpg' %}");
+        }
+       .second{
+        transform: translate(-10%, -10%);
+        background-repeat: no-repeat;
+        height: 200px;
+        width: 400px;
+        position: relative;
+        background-image:url("{% static '/smartphone/images/apple.jpg' %}");
+        margin-left: 30px;
+       }
+        
+        .button_right{
+            
+            align-items:center;
+            width:200px;
+            float:left;
+            
+           
+            
+            height:calc(100vw - 95vw);
+            max-height: 100%;
+            margin-top: 50px;
+            border-radius:10px;
+            display:block;
+            }
+        .btn_class{
+            padding: 25px;
+            margin: 10px;
+            outline:none;
+            border:none;
+            display:block;
+            background-color: rgb(172, 177, 157);
+            border-radius: 2px;
+            width:200px;
+            height: 4px;
+            font-size:large;
+        
+        }
+        
+        a{
+            color:black;
+
+        }
+        
+        
+       
+</style>
+    </head> 
+    <body>
+        <div class="container">
+           
+            <form>
+                <div class="heading">
+                    <h2>Mobile Center</h2>
+                </div>
+                <div class="main">
+                <div class="image_left">
+                <div class="first"></div>
+                <div class="second"></div>
+                </div>
+                <div class="button_right">
+                    <a  href="/showroom/brand" class="btn_class">Create Brands</a>
+                    <a href="/showroom/model" class="btn_class">Create Models</a>
+                    <a href="/showroom/listbrands" class="btn_class">List Brands</a>
+                    <a href="" class="btn_class">List Models</a>
+                    
+                </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

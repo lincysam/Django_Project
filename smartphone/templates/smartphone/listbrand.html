@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+             .list{
+                position:absolute;
+                top: 10px;
+                right: 20px;
+                font-size: 20px;
+            }
+            .nameclass{
+                position:relative;
+                margin-bottom: 30px;
+            }
+            .imgclass{
+                position:relative;
+            }
+            .container{
+                text-align:center;
+            }
+        </style>
+    </head>
+    
+        <body>
+            <div class="previous">
+                <a href="/showroom/home">Previous</a><br><br>
+                </div>
+            {% csrf_token %}
+            <div class="container">
+                <h2>List Of Brands</h2>
+                {% for brand in brandobj %}
+                
+                    <div class="imgclass">
+                    <a href="/showroom/modellist?brand_id={{brand.id}}"><img src="/media/{{brand.brand_image}}"></a>
+                    </div>
+                    <div class="nameclass">
+                    Brand: {{brand.brandname}}
+                     </div>
+                {% endfor %}
+                
+                
+            </div>
+            
+        </body>
+</html>

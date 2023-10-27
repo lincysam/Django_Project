@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      
+        
+    <style>
+         body{
+	align-items:center;
+	justify-content:center;
+	background-size:100%;
+	background-repeat:no-repeat;
+	display:flex;
+	min-height:100vh;
+	background-color:lightgreen;
+	}
+        .container{
+            border-radius:10px;
+	-webkit-border-radius:10px;
+	overflow:hidden;
+	
+	width:calc(100vw - 65vw);
+	max-width:100%;
+	padding:10px;
+	background-color:white;
+    box-shadow:
+    inset 0 -3em 3em rgba(0, 200, 0, 0.3),
+    0 0 0 2px white,
+    0.3em 0.3em 1em rgba(200, 0, 0, 0.6);
+	
+}
+        
+       .container h2{
+            margin-left: 100px;
+            font-style: italic;
+        }
+        
+        .details{
+            margin:25px;
+            border:1px;
+            border-radius: 5px;
+            width:400px;
+            height:fit-content;
+            
+            
+        }
+
+        .labelclass{
+            padding: 5px;
+            margin:6px;
+            width:200px;
+            height: 20px;
+        }
+        
+        .first{
+            margin:2px;
+            padding:3px;
+        }
+        .second{
+            margin:2px;
+            padding:3px;
+        }
+        .textclass{
+            padding: 5px;
+            margin:6px;
+            width:200px;
+            height: 20px;
+        }
+        .btnclass{
+            padding:10px;
+            font-size: large;
+            height: 30px;
+            width:100px;
+            margin-left: 100px;
+            color: rgb(61, 10, 204);
+            font-size: large;
+            font-weight: bold;
+        }
+        .button{
+
+            margin-left: 100px;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+           
+            
+            <form  method="POST" action="/showroom/createbrand"  enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2>Brand Details</h2>
+                <div class="details">
+                    <div class="first">
+                    <label class="labelclass">Brand Name
+                        <input type="text" class="textclass" name="brandname">
+                    </label>
+
+                     </div>
+                   <div class="second">
+                    <label class="labelclass">Select a File:
+                        <input type="file" class="textclass" name="myfile" id="myfile"/>
+
+                    </label>
+                    </div>
+                
+                   <div class="btnclass">
+                    <input type="submit" value="SAVE" >
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

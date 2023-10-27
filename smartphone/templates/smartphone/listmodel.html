@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .list{
+                position:absolute;
+                top: 10px;
+                right: 20px;
+                font-size: 20px;
+            }
+            .nameclass{
+                position:relative;
+                margin-left:50px;
+            }
+            .price{
+                position:relative;
+                margin-left: 50px;
+            }
+            .imgclass{
+                position:relative;
+                padding:2px;
+            }
+            .sell{
+                position: relative;
+                margin-left: 50px;
+                margin-bottom: 25px;;
+            }
+            .container{
+                text-align:center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="previous">
+            <a href="/showroom/listbrands">Previous</a><br><br>
+            </div>
+        <div class="container">
+            <h2> List of Models</h2>
+            <form action="" method="POST">
+            
+            {% for eachmodel in modelobj %}
+            <div class="imgclass">
+                <img src="/media/{{eachmodel.mobile_image}}">
+            </div>
+            <div class="nameclass">
+                Modelname: {{eachmodel.modelname}}
+            </div>
+            <div class="price">
+                Price: {{eachmodel.price}}
+            </div>
+            <div class="sell">
+                <a href="/showroom/transaction?model_id={{eachmodel.id}}"><input type="button" Value="SELL"></a>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>

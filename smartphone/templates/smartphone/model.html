@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      
+        
+    <style>
+        body{
+	align-items:center;
+	justify-content:center;
+	background-size:100%;
+	background-repeat:no-repeat;
+	display:flex;
+	min-height:100vh;
+	background-color:lightgreen;
+	}
+        .container{
+            border-radius:10px;
+	-webkit-border-radius:10px;
+	overflow:hidden;
+	
+	width:calc(100vw - 60vw);
+	max-width:100%;
+	padding:10px;
+	background-color:white;
+    box-shadow:
+    inset 0 -3em 3em rgba(0, 200, 0, 0.3),
+    0 0 0 2px white,
+    0.3em 0.3em 1em rgba(200, 0, 0, 0.6);
+	
+}
+        
+       .container h2{
+            margin-left: 100px;
+            font-style: italic;
+        }
+        .details{
+            margin:25px;
+            border:1px;
+            border-radius: 5px;
+            width:400px;
+            height:fit-content;
+           
+            position:relative;
+        }
+
+        .labelclass{
+            padding: 5px;
+            margin:6px;
+            width:200px;
+            height: 20px;
+        }
+        .brandclass{
+            margin:2px;
+            padding:3px;
+            margin-left: 25px;
+        }
+        .first{
+            margin:2px;
+            padding:3px;
+
+        }
+        .second{
+            margin:2px;
+            padding:3px;
+        }
+        .third{
+            margin:2px;
+            padding:3px;
+            
+        }
+        .priceclass{
+            margin-left: 55px;
+            padding: 5px;
+            
+            width:200px;
+            height: 20px;
+        }
+        .textclass{
+            position:relative;
+            padding: 5px;
+            margin:10px;
+            width:200px;
+            height: 20px;
+            
+        }
+        .dropclass{
+            position:relative;
+            width:200px;
+            height:30px;
+            margin:10px;
+        }
+        .btnclass{
+            padding:10px;
+           
+            height: 30px;
+            width:100px;
+            margin-left: 130px;
+            color: rgb(61, 10, 204);
+            font-size: large;
+            font-weight: bold;
+          
+            
+            
+        }
+    </style>
+    </head>
+    <body>
+        
+        <div class="container">
+            <centre><h2>Model Details</h2></centre>
+            
+            <form  method="POST" action="/showroom/createmodel"  enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="details">
+                    <div class="first">
+                        <label class="labelclass">Brand Name
+                            <select name="brand_id" class="dropclass">
+                                <option value="select">--Select--</option>
+                            {% for eachbrand in brandobj %}
+                            <option value="{{eachbrand.id}}">{{eachbrand.brandname}}</option>
+                            {% endfor %}
+                        </select>
+                            
+                        </label>
+    
+                         </div>
+                    <div class="first">
+                    <label class="labelclass">Model Name
+                        <input type="text" class="textclass" name="modelname">
+                    </label>
+                     </div>
+                     <div class="third">
+                        <label class="labelclass">Price
+                            <input type="text" class="priceclass" name="price">
+                        </label>
+    
+                         </div>
+                         <div class="first">
+                            <label class="labelclass">Release Year
+                                <input type="text" class="textclass" name="release_year">
+                            </label>
+                             </div>
+                             <div class="first">
+                                <label class="labelclass">Available Quantities
+                                    <input type="text" class="textclass" name="quantity">
+                                </label>
+                                 </div>
+                                 <div class="first">
+                                    <label class="labelclass">Is Available
+                                        <select class="dropclass" name="available">
+                                            <option value="select">--Select--</option>
+                                            <option value="True">True</option>
+                                            <option value="False">False</option>
+                                        </select>
+                                        
+                                    </label>
+                                     </div>
+                   <div class="second">
+                    <label class="labelclass">Select an Image:
+                        <input type="file" class="textclass" name="myfile" >
+
+                    </label>
+                    </div>
+                
+                   <div class="btnclass">
+                    <input type="submit" value="SAVE">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
