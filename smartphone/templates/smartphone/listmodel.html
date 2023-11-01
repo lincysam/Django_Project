@@ -8,7 +8,56 @@
                 right: 20px;
                 font-size: 20px;
             }
-            .nameclass{
+ .container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  max-height: fit-content;
+  gap: 10px;
+}
+
+.main{
+  flex: 0 0 25.3333%;
+  border-radius: 10px;
+  border:solid dimgray;
+  
+} 
+
+.details{
+    align-content: center;
+    margin-left: 10px;
+}
+.sell  {
+                margin-top: 2pxpx;
+                padding:5px;
+                width:100px;
+                border-radius: 10px;
+                background-color: black;
+                color: bisque;
+            }
+
+  .btn{
+    background-color:black;
+    color: bisque;
+    
+  }          
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}  
+
+
+
+           /* .nameclass{
                 position:relative;
                 margin-left:50px;
             }
@@ -27,15 +76,46 @@
             }
             .container{
                 text-align:center;
-            }
+            }*/
         </style>
     </head>
     <body>
-        <div class="previous">
-            <a href="/showroom/listbrands">Previous</a><br><br>
+        <div class="topnav">
+            <a href="/showroom/home">Home</a>
+        </div>
+
+         <div class="container">
+            
+           
+            
+            
+            {% for eachmodel in modelobj %}
+            <div class="main">
+            <div class="imgclass">
+                <img src="/media/{{eachmodel.mobile_image}}">
             </div>
-        <div class="container">
-            <h2> List of Models</h2>
+            <div clss="details">
+            <div class="nameclass">
+                
+                <label> {{eachmodel.modelname}}</label>
+            </div>
+            <div class="price">
+                Price: {{eachmodel.price}}
+            </div>
+            <div class="sell">
+                <a href="/showroom/transaction?model_id={{eachmodel.id}}"><input type="button" Value="SELL" class="btn"></a>
+            </div>
+            </div>
+        </div>
+            {% endfor %}
+       
+        </div>
+
+
+
+
+        <!--div class="container">
+            
             <form action="" method="POST">
             
             {% for eachmodel in modelobj %}
@@ -43,7 +123,8 @@
                 <img src="/media/{{eachmodel.mobile_image}}">
             </div>
             <div class="nameclass">
-                Modelname: {{eachmodel.modelname}}
+                
+                <label> {{eachmodel.modelname}}</label>
             </div>
             <div class="price">
                 Price: {{eachmodel.price}}
@@ -52,6 +133,6 @@
                 <a href="/showroom/transaction?model_id={{eachmodel.id}}"><input type="button" Value="SELL"></a>
             </div>
             {% endfor %}
-        </div>
+        </div>-->
     </body>
 </html>

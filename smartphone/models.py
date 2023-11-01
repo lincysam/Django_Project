@@ -24,8 +24,7 @@ class phonemodel(models.Model):
     is_available=models.BooleanField()
     mobile_image=models.ImageField(upload_to='mobimg/', default=None,null=True)
 
-class transactions(models.Model):
-    tran_id=models.IntegerField(primary_key=True)
+class mobile_trans(models.Model):
     usersample=models.ForeignKey(User, on_delete=models.CASCADE) 
     trans_model=models.ForeignKey(phonemodel,on_delete=models.CASCADE,null=True)
     transaction_type=models.CharField(choices=T_TYPE,max_length=20,null=True)

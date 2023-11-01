@@ -2,7 +2,7 @@ from django.shortcuts import render
 import datetime,time
 from .models import *
 from datetime import *
-
+from django.contrib.auth.models import User
 # Create your views here.
 def homepage(request):
     return render(request,'mobilecenter.html')
@@ -12,11 +12,11 @@ def brandpage(request):
     
 def createbrand(request):
     if request.method =='POST':
-        print("Hellooooooo")
+        
         brandname=request.POST['brandname']
         brandfile=request.FILES['myfile']
         now = datetime.now()
-        print("Brandname:  ",brandname)
+        
         savedata=brand(brandname=brandname,created_at=now,updated_at=now,brand_image=brandfile)
         savedata.save()
         msg="Data saved"
@@ -52,8 +52,18 @@ def modellist(request):
 def transaction(request):
         model_id=request.GET['model_id']
         
-        modelobj=phonemodel.objects.filter(id=model_id)
+        modelobj=phonemodel.objects.get(id=model_id)
+        print("Name:",modelobj)
         return render(request,'trans.html',{'modelobj': modelobj})
 def payment(request):
-        msg="You have compleated your transaction successfully"
+    if request.method=='POST':
+        trans_model=request.POST['model_id']
+        modelobj=phonemodel.objects.get(id=trans_model)
+        userdata = User.objects.get(username=request.user)
+        model_id=phonemodel(id=trans_model)
+        transaction_type=request.POST['transtype']
+        t_amount=modelobj.price
+        savedata=mobile_trans(trans_model=model_id,transaction_type=transaction_type,t_amount=t_amount,usersample=userdata)
+        savedata.save()
+        msg="You have completed your transaction successfully"
         return render(request,'success.html',{'msg':msg})
