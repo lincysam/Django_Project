@@ -54,6 +54,9 @@
   text-decoration: none;
   font-size: 17px;
 }  
+.stock{
+    color: red;
+}
 
 
 
@@ -102,8 +105,19 @@
             <div class="price">
                 Price: {{eachmodel.price}}
             </div>
+            <div class="quantity">
+                {% if eachmodel.available_quantities > 0 %}
+                     No.of Stock: {{eachmodel.available_quantities}}
+                {% else %}
+                     <label class="stock">out of stock</label>
+                {% endif %}
+            </div>
             <div class="sell">
-                <a href="/showroom/transaction?model_id={{eachmodel.id}}"><input type="button" Value="SELL" class="btn"></a>
+                {% if eachmodel.available_quantities > 0 %}
+                    <a href="/showroom/transaction?model_id={{eachmodel.id}}"><input type="button" Value="SELL" class="btn"></a>
+                {% else %}
+                    <a href="/showroom/transaction?model_id={{eachmodel.id}}"><input type="button" Value="SELL" class="btn" disabled></a>
+                {% endif %}
             </div>
             </div>
         </div>

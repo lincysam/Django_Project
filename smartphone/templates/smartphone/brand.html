@@ -87,7 +87,7 @@
         
         <div class="container">
            
-            
+            <h2>{{msg}}</h2>
             <form  method="POST" action="/showroom/createbrand"  enctype="multipart/form-data">
                 {% csrf_token %}
                 <h2>Brand Details</h2>
@@ -100,7 +100,7 @@
                      </div>
                    <div class="second">
                     <label class="labelclass">Select a File:
-                        <input type="file" class="textclass" name="myfile" id="myfile"/>
+                        <input type="file" class="textclass" name="myfile" id="myfile" required/>
 
                     </label>
                     </div>
