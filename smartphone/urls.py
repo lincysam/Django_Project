@@ -29,6 +29,7 @@ urlpatterns = [
     path("listbrands",views.brandlist,name='brandlist'),
     path("modellist",views.modellist,name='modellist'),
     path("transaction",views.transaction,name='trans'),
-     path("payment",views.payment,name='trans'),
+    path("payment",views.payment,name='trans'),
+    path("statistics",views.statistics,name='status')
     #path("updatemodel/<int:pk>",views.updatemodel,'update')
       ]

@@ -5,6 +5,7 @@ from datetime import *
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.db.models import Avg,Sum,Count,Max
 # Create your views here.
 def homepage(request):
     return render(request,'mobilecenter.html')
@@ -93,3 +94,73 @@ def payment(request):
             return render(request,'success.html',{'msg':msg})
         except Exception as e:
             print("Some Error occured")
+def statistics(request):
+    maxmodeldict={}
+    total_phone=mobile_trans.objects.count()
+      
+    topselling_model=mobile_trans.objects.values('trans_model').annotate(Count('trans_model'))
+    maxmodelcount=0
+    countval=len(topselling_model)
+    print("Top selling",topselling_model)
+    
+    for i in range(0,countval):
+        if(maxmodelcount < topselling_model[i]['trans_model__count']):
+            maxmodelcount = topselling_model[i]['trans_model__count']
+            maxmodeldict[topselling_model[i]['trans_model']]=topselling_model[i]['trans_model__count']
+        elif(maxmodelcount == topselling_model[i]['trans_model__count']):   
+            maxmodeldict[topselling_model[i]['trans_model']]=topselling_model[i]['trans_model__count']
+
+    max_models = [key for key, value in maxmodeldict.items() if value == max(maxmodeldict.values())] 
+    # print("Top selling models are:")
+    if(len(max_models) > 1):
+        
+        modelobj=(phonemodel.objects.filter(id__in=max_models))
+        modelobj_count=modelobj.count()
+        print("Tp_selling_model_count",modelobj_count)
+    else:   
+        modelobj = phonemodel.objects.get(id = max_models[0])
+        modelobj_count = 1
+    print("Top selling model",modelobj.id)
+    print("Top selling model count",modelobj_count)
+    
+    
+    modelval=mobile_trans.objects.all()
+    branddict={}
+    for eachmodel in modelval:
+       
+        brandobj=brand.objects.get(id=eachmodel.trans_model.brand_id_id)
+        if(brandobj.brandname in branddict):
+            branddict[brandobj.brandname] += 1
+        else:
+            branddict[brandobj.brandname] = 1
+    max_brand = [key for key, value in branddict.items() if value == max(branddict.values())] 
+
+    
+    top_brand=brand.objects.get(brandname=max_brand[0])
+    print("Top selling Brand is :",top_brand.brandname)
+    modellist=[]
+    value_model=phonemodel.objects.annotate(Max('price'))
+   
+    arg = value_model.order_by('-price')
+    argcount=arg.count()
+      
+    modellist.append(arg[0].id)
+    for i in range(1,argcount):
+        
+        if(arg[i].price == arg[i-1].price):
+            modellist.append(arg[i].id)
+        else:
+            break
+    if(len(modellist) > 1):
+        topvaluemodel=(phonemodel.objects.filter(id__in=modellist))
+        topvaluemodel_count=topvaluemodel.count()
+        print("Top Value Brand",topvaluemodel[0].brand_id)
+    else:
+        topvaluemodel=(phonemodel.objects.get(id=modellist[0]))
+        topvaluemodel_count=1
+        top_value_brand=topvaluemodel.brand_id.brandname
+    print("Top valued brand",topvaluemodel.brand_id.brandname)
+   
+    return render(request,'list.html',{'phone_count':total_phone,'top_sell_brand':top_brand.brandname,'top_sell_model':modelobj,'top_model_count':modelobj_count,'top_value_model':topvaluemodel,'top_value_count':topvaluemodel_count,'top_value_brand':top_value_brand})
+   
+   

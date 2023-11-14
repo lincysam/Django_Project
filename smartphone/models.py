@@ -14,7 +14,7 @@ class brand(models.Model):
 
 
 class phonemodel(models.Model):
-    brand_id=models.ForeignKey(brand, on_delete=models.CASCADE, null=True)
+    brand_id=models.ForeignKey(brand, on_delete=models.CASCADE, null=True,related_name="brand")
     modelname=models.CharField(max_length=200,null=True)
     release_year=models.DateField()
     available_quantities=models.IntegerField()
@@ -26,7 +26,7 @@ class phonemodel(models.Model):
 
 class mobile_trans(models.Model):
     usersample=models.ForeignKey(User, on_delete=models.CASCADE) 
-    trans_model=models.ForeignKey(phonemodel,on_delete=models.CASCADE,null=True)
+    trans_model=models.ForeignKey(phonemodel,on_delete=models.CASCADE,null=True,related_name="model")
     transaction_type=models.CharField(choices=T_TYPE,max_length=20,null=True)
     t_amount=models.IntegerField()
 
