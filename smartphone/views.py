@@ -120,7 +120,7 @@ def statistics(request):
     else:   
         modelobj = phonemodel.objects.get(id = max_models[0])
         modelobj_count = 1
-    print("Top selling model",modelobj.id)
+    print("Top selling model",modelobj)
     print("Top selling model count",modelobj_count)
     
     
