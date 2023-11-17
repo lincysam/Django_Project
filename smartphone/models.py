@@ -26,7 +26,7 @@ class phonemodel(models.Model):
 
 class mobile_trans(models.Model):
     usersample=models.ForeignKey(User, on_delete=models.CASCADE) 
-    trans_model=models.ForeignKey(phonemodel,on_delete=models.CASCADE,null=True,related_name="model")
+    trans_model=models.ForeignKey(phonemodel,on_delete=models.CASCADE,null=True,related_name="phonemodel")
     transaction_type=models.CharField(choices=T_TYPE,max_length=20,null=True)
     t_amount=models.IntegerField()
 

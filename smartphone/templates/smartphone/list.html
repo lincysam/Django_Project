@@ -8,6 +8,7 @@
                 display: flex;
             }
             .data{
+                display: block;
                 margin-top: 20px;
                 padding:10px;
                 width:calc(100vw - 65vw);
@@ -23,11 +24,8 @@
   background-color: #333;
   overflow: hidden;
 }
-th{
-    margin:5px;
-    padding: 20px;
-    font-size: large;
-}
+
+
 .topnav a {
   float: left;
   color: #f2f2f2;
@@ -37,19 +35,45 @@ th{
   font-size: 17px;
 } 
 .labelclass{
+    display: block;
+    
     padding:10px;
     margin:2px;
     height:10px;
-    width:100px;
+    width:150px;
+    font-weight: bold;
 }
 .list{
+    position: relative;
     padding:10px;
-    margin:2px;
+     margin:3px;
     height:10px;
-    width:130px;
-}
-.data input{
+    width:150px;
+    border: 1px;
     margin-left: 20px;
+    
+}
+
+.data .list{
+    cursor: pointer;
+}
+
+.data .list:hover{
+    position :relative;
+    z-index: 2;
+    text-shadow: 0 10px 5px black;
+}
+.effect{
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    box-shadow: 0 5px 20px brown;
+    border-radius: 25px;
+    transform: translate(-50%,-50%) scale(.01);
+}
+.data .list:hover ~ .effect{
+    transform: translate(130%, -130%) scale(1);
+    opacity: 1;
 }
         </style>
 
@@ -62,62 +86,43 @@ th{
         <div class="container">
             
             <div class="data">
-                
-                
-                <table>
-                    <th>Statistics of the Showroom</th>
-                    <tr>
-                        <td>
-                            <label class="labelclass">Total phones Sold
-                            <input type="text" class="list" value="{{phone_count}}">
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                <h2>Statistics of the Showroom</h2>
+                <label class="labelclass">Total phones Sold </label>
+                            <p class="list">{{phone_count}} </p>
+                 <label class="labelclass">Top Selling Brand </label>
+                          <p class="list" data_src="/media/{{TopSellBrand.brand_image}}">{{TopSellBrand.brandname}}</p>
+                <label class="labelclass">Top Selling Model </label>
+                          <p class="list" data_src="/media/{{TopSellmodel.mobile_image}}">{{TopSellmodel.modelname}}</p>
                             
-                            <label class="labelclass">Top Selling Brand
-                            <input type="text" class="list" value="{{top_sell_brand}}">
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="labelclass">Top Selling Model
-                            {% if top_model_count == 1 %}
-                                <input type="text" class="list" value="{{top_sell_model.modelname}}">
+                <label class="labelclass">Top Valued Model</label>
+                            {% if TopValuedModel_count == 1 %} 
+                                <!--input type="text" class="list" value="{{TopModel.modelname}}">-->
+                                <p class="list" data_src="/media/{{TopModel.mobile_image}}">{{TopModel.modelname}}</p>
                             {% else %}
-                                    {% for eachmodel in top_sell_model %}
-                                        <input type="text" class="list" value="{{eachmodel.modelname}}">
-                                    {% endfor %}
-                                {% endif %}
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="labelclass">Top Valued Model
-                                {% if top_value_count == 1 %}
-                            <input type="text" class="list" value="{{top_value_model.modelname}}">
-                                {% else %}
-                                    {% for eachmodel in top_value_model %}
-                                    <input type="text" class="list" value="{{eachmodel.modelname}}">
-                                    {% endfor %}
-                                 {% endif %}   
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="labelclass">Top Valued Brand
-                            <input type="text" class="list" value="{{top_value_brand}}">
-                            </label>
-                        </td>
-                    </tr>
-
-                </table>
+                           
+                                {% for eachmodel in TopValuedModel %} 
+                                   <!--input type="text" class="list" value="{{eachmodel.modelname}}">-->
+                                   <p class="list" data_src="/media/{{eachmodel.mobile_image}}">{{eachmodel.modelname}}</p>
+                            
+                                 {% endfor %}
+                             {% endif %} 
+                        
+                            <label class="labelclass">Top Valued Brand</label>
+                            <p class="list" data_src="/media/{{top_value_brand.brand_image}}">{{top_value_brand.brandname}}</p>
+                       
+                            <img src="/media/{{TopSellBrand.brand_image}}" alt="" class="effect">
 
             </div>
         </div>
+        <script>
+            let A = document.querySelector('.data');
+            let B = A.querySelector('.effect')
+            A.querySelectorAll('.list').forEach(text => {
+                text.onmousemove = () => {
+                    B.src = text.getAttribute('data_src');
+                }
+
+            });
+        </script>
     </body>
 </html>
