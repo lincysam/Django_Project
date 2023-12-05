@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            {% load static %}
+            <link rel ="stylesheet"  href="{%static '/smartphone/css/register.css' %}">
+        
+    </head>
+    <body>
+        <div class="topnav">
+            <a href="/accounts/index">Home</a>
+        </div>
+        <div class="container">
+            <div class="data">
+                <div class="msg">
+                    {% for message in messages %}
+                       <h3> {{message}}</h3>
+                        {% endfor %}
+                </div>
+                <h2>User Login </h2>
+              <form action="/accounts/login" method="POST">
+                {% csrf_token %}
+             
+                <div class="divclass">
+                    <label class="labelclass">Username</label>
+                        <input type="text" class="input" name="username">
+                  
+                </div>
+                <div class="divclass">
+                    <label class="labelclass">Password  </label>
+                        <input type="password" class="input" name="password">
+                    </label>
+                </div>
+               
+                <div class="divclass">
+                    <input type="submit" class="btnclass" value="Login">
+                </div>
+
+             </form>
+            </div>
+        </div>
+
+        
+    </body>
+</html>

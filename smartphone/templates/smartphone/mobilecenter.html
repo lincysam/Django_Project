@@ -100,24 +100,45 @@
         }
         
         .topnav {
+            display: flex;
   background-color: #333;
   overflow: hidden;
+  justify-content: space-between;
 }
-.topnav a {
-  float: left;
-  color: #f2f2f2;
+.topnav a,p {
+    color: #f2f2f2;
   text-align: center;
-  padding: 14px 16px;
+  padding: 16px 16px;
   text-decoration: none;
   font-size: 17px;
-}        
+}  
+
+.left{
+    float:left;
+    display:flex;
+}  
+.right{
+
+    float:right;
+    display:flex;
+}  
+.right p{
+    color: #f2f2f2;
+}  
        
 </style>
     </head> 
     <body>
+        {% if user.is_authenticated %}
         <div class="topnav">
-            <a href="/showroom/home">Home</a>
-            <a href="/showroom/statistics">Statistics</a>
+            <div class="left">
+             <a href="/showroom/home">Home</a>
+             <a href="/showroom/statistics">Statistics</a>
+            </div>
+            <div class="right">
+                <p> Welcome ! {{ user.first_name}}</p>
+                <a href="/showroom/logout">Logout</a> 
+            </div>
         </div>
         <div class="container">
            
@@ -140,5 +161,7 @@
                 </div>
             </form>
         </div>
+        {% endif %}
+
     </body>
 </html>

@@ -1,6 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
+<!Doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+   
         <style>
             .list{
                 position:absolute;
@@ -120,30 +125,26 @@
         </div>
             {% endfor %}
        
+        </div><br><br>
+               
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if modelobj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ modelobj.previous_page_number }}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ modelobj.number }} of {{ modelobj.paginator.num_pages }}.
+                </span>
+        
+                {% if modelobj.has_next %}
+                    <a href="?page={{ modelobj.next_page_number }}">next</a>
+                    <a href="?page={{ modelobj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
         </div>
-
-
-
-
-        <!--div class="container">
-            
-            <form action="" method="POST">
-            
-            {% for eachmodel in modelobj %}
-            <div class="imgclass">
-                <img src="/media/{{eachmodel.mobile_image}}">
-            </div>
-            <div class="nameclass">
-                
-                <label> {{eachmodel.modelname}}</label>
-            </div>
-            <div class="price">
-                Price: {{eachmodel.price}}
-            </div>
-            <div class="sell">
-                <a href="/showroom/transaction?model_id={{eachmodel.id}}"><input type="button" Value="SELL"></a>
-            </div>
-            {% endfor %}
-        </div>-->
+         
     </body>
 </html>

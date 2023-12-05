@@ -6,12 +6,17 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.db.models import Avg,Sum,Count,Max
+from django.contrib.auth.models import User, auth
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+#from .filters import modelFilter
+
+
 # Create your views here.
 def homepage(request):
-    return render(request,'mobilecenter.html')
+    return render(request,'smartphone/mobilecenter.html')
 
 def brandpage(request):
-    return render(request,'brand.html')
+    return render(request,'smartphone/brand.html')
     
 def createbrand(request):
     if request.method =='POST':
@@ -22,12 +27,12 @@ def createbrand(request):
             if(brandname =="" or brandfile==""):
                 
                 msg="Please fill required fields"
-                return render(request,'brand.html',{'msg':msg})
+                return render(request,'smartphone/brand.html',{'msg':msg})
             else:
                 savedata=brand(brandname=brandname,created_at=now,updated_at=now,brand_image=brandfile)
                 savedata.save()
                 msg="Data saved"
-                return render(request,'mobilecenter.html')
+                return render(request,'smartphone/mobilecenter.html')
         except Exception as e:
             print("Some error occured")       
                  
@@ -35,7 +40,7 @@ def createbrand(request):
 def modelpage(request):
     brandobj=brand.objects.all()
     
-    return render(request,'model.html',{'brandobj':brandobj})   
+    return render(request,'smartphone/model.html',{'brandobj':brandobj})   
 
 def  createmodel(request):
     if request.method =='POST':
@@ -53,16 +58,25 @@ def  createmodel(request):
         savedata=phonemodel(brand_id=bid,created_at=now,updated_at=now,mobile_image=mobile_image,modelname=modelname,release_year=release_year,available_quantities=quantity,price=price,is_available=available)
         savedata.save()
         msg="Data saved"
-        return render(request,'mobilecenter.html')
+        return render(request,'smartphone/mobilecenter.html')
 def brandlist(request):
-         
+        print("HELLO-----------")
         brandobj=brand.objects.all()
-        return render(request,'listbrand.html',{'brandobj': brandobj})
+        paginator = Paginator(brandobj , 2)
+        brandpage_number= request.GET.get("page")
+        print("BRAND NO-----------------",brandpage_number)
+        brandpageobj = paginator.get_page(brandpage_number)
+
+        return render(request,'smartphone/listbrand.html',{'brandobj': brandpageobj})
 def modellist(request):
+        print("Haiiii")
         brand_id=request.GET['brand_id']
-        modelobj=phonemodel.objects.filter(brand_id=brand_id) 
-       
-        return render(request,'listmodel.html',{'modelobj': modelobj})
+        modelobj=phonemodel.objects.filter(brand_id=brand_id)
+        paginator = Paginator(modelobj , 3)
+        page_number= request.GET.get('page')
+        pageobj = paginator.get_page(page_number)
+        print("Page :......",pageobj)
+        return render(request,'smartphone/listmodel.html',{'modelobj': pageobj,'brand_id':brand_id})
         
 
 def transaction(request):
@@ -71,7 +85,7 @@ def transaction(request):
         modelobj=phonemodel.objects.get(id=model_id)
         
         
-        return render(request,'trans.html',{'modelobj': modelobj})
+        return render(request,'smartphone/trans.html',{'modelobj': modelobj})
         
             
 def payment(request):
@@ -91,22 +105,18 @@ def payment(request):
             modelobj.updated_at=datetime.now()
             modelobj.save()
             msg="You have completed your transaction successfully"
-            return render(request,'success.html',{'msg':msg})
+            return render(request,'smartphone/success.html',{'msg':msg})
         except Exception as e:
             print("Some Error occured")
 def statistics(request):
     
     total_phone=mobile_trans.objects.count()
    
-    TopValuedBrand = brand.objects.annotate(total_price=Sum('brand__price')).order_by('-total_price').first()
+    TopValuedBrand = brand.objects.annotate(total_price=Sum('brand__price')).order_by('-total_price')[:1]
+    print("Top Brand.........",TopValuedBrand[0].brandname)
     TopValuedModel = phonemodel.objects.annotate(max_price=Max('price')).order_by('-max_price').first()
     TopValuedModelobj=phonemodel.objects.filter(price=TopValuedModel.price)
     TopValuedModel_count=TopValuedModelobj.count()
-   
-
-    print("Model Count-----",TopValuedModel_count)
-    print("Model object-----",TopValuedModelobj)
-    
     TopSellmodel = phonemodel.objects.annotate(mobilecount = Count('phonemodel')).order_by('-mobilecount').first()
     print("Top Sell Model is.......", TopSellmodel.modelname)
     TopSellBrand = brand.objects.annotate(brandcount=Count('brand__phonemodel')).order_by('-brandcount').first()
@@ -117,6 +127,10 @@ def statistics(request):
         'TopSellmodel':TopSellmodel,
         'TopValuedModel_count':TopValuedModel_count,
         'TopValuedModel':TopValuedModelobj,
-        'top_value_brand':TopValuedBrand ,
+        'top_value_brand':TopValuedBrand[0],
          'TopModel':TopValuedModel}
-    return render(request,'list.html',result)
+    return render(request,'smartphone/list.html',result)
+
+def logout(request):
+        auth.logout(request)
+        return render(request,'accounts/login.html')
