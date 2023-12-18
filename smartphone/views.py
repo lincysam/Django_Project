@@ -8,16 +8,50 @@ from django.db.models import Q
 from django.db.models import Avg,Sum,Count,Max
 from django.contrib.auth.models import User, auth
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+from .serializers import BrandSerializer,ModelSerializer
+from rest_framework import viewsets
+from rest_framework.views import APIView
 #from .filters import modelFilter
 
 
 # Create your views here.
+
+class Brandview(viewsets.ModelViewSet):
+     queryset = brand.objects.all()
+     serializer_class =BrandSerializer
+
+"""class CreateBrandView(APIView):
+    
+    def get(self,request):
+         all_brands = brand.objects.all()
+         serializer_class = BrandSerializer
+         
+    
+    
+
+    def post(self,request):
+         serializer_class = CreateBrandSerializer
+         serializer = self.serializer_class(data=request.data)
+         if serializer.is_valid():
+              serializer.save()"""
+
+
+
+
+
+
+
+
+
+"""""
 def homepage(request):
     return render(request,'smartphone/mobilecenter.html')
 
 def brandpage(request):
     return render(request,'smartphone/brand.html')
     
+
+
 def createbrand(request):
     if request.method =='POST':
         try:   
@@ -133,4 +167,4 @@ def statistics(request):
 
 def logout(request):
         auth.logout(request)
-        return render(request,'accounts/login.html')
+        return render(request,'accounts/login.html') """
